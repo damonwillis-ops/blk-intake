@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLK Group — Action Items</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0c0e;--panel:#16181c;--panel2:#1e2127;--line:#2b2f37;--muted:#8b9099;
+  --text:#eef0f3;--accent:#c19a5b;--accent-soft:#3a3326;--radius:12px;
+  --red:#e74c3c;--green:#27ae60;--orange:#f39c12}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100vh}
+
+/* LOGIN */
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.login-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:40px 32px;max-width:340px;width:100%;text-align:center}
+.brand{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.login-title{font-size:22px;font-weight:600;margin-bottom:6px}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:28px}
+.pin-input{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);
+  border-radius:9px;padding:13px 14px;font-size:18px;font-family:inherit;text-align:center;
+  letter-spacing:.3em;margin-bottom:12px}
+.pin-input:focus{outline:none;border-color:var(--accent)}
+.btn-primary{width:100%;background:var(--accent);color:#1a1407;border:none;border-radius:9px;
+  padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-primary:hover{filter:brightness(1.08)}
+.err{color:var(--red);font-size:12px;margin-top:8px;min-height:18px}
+
+/* APP */
+#app{display:none;max-width:720px;margin:0 auto;padding:24px 16px 60px}
+.top-bar{display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:26px}
+.top-brand{font-size:11px;letter-spacing:.24em;text-transform:uppercase}
+.top-brand span{color:var(--accent)}
+.top-meta{font-size:12px;color:var(--muted)}
+.logout-btn{background:none;border:1px solid var(--line);color:var(--muted);
+  border-radius:7px;padding:6px 12px;font-size:11px;cursor:pointer;font-family:inherit;
+  letter-spacing:.1em;text-transform:uppercase}
+.logout-btn:hover{border-color:var(--accent);color:var(--text)}
+
+.section{margin-bottom:28px}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.section-head h2{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.section-head h2::before{content:"";display:inline-block;width:16px;height:1px;background:var(--accent);opacity:.6;margin-right:8px;vertical-align:middle}
+.count-badge{font-size:10px;background:var(--accent-soft);color:var(--accent);
+  border-radius:999px;padding:2px 8px;font-weight:600}
+
+.item{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;
+  transition:border-color .15s}
+.item.done{opacity:.45}
+.item.done .item-title{text-decoration:line-through}
+.item:not(.done):hover{border-color:var(--accent-soft)}
+
+.check{width:22px;height:22px;flex-shrink:0;border:2px solid var(--line);border-radius:6px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .15s}
+.check.checked{background:var(--green);border-color:var(--green)}
+.check svg{display:none}
+.check.checked svg{display:block}
+
+.item-body{flex:1;min-width:0}
+.item-title{font-size:14px;font-weight:500;margin-bottom:3px}
+.item-detail{font-size:12px;color:var(--muted);line-height:1.5}
+.item-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;border-radius:5px;padding:2px 7px;margin-top:6px}
+.tag-urgent{background:#3a1818;color:var(--red)}
+.tag-needed{background:#2b2416;color:var(--orange)}
+.tag-ready{background:#1a2e1a;color:var(--green)}
+
+.progress-bar{background:var(--panel2);border-radius:999px;height:6px;margin-bottom:26px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#e8b96a);border-radius:999px;transition:width .4s}
+.progress-label{font-size:11px;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between}
+
+.note-box{background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:20px}
+.note-box strong{color:var(--text)}
+
+@media(max-width:480px){
+  #app{padding:16px 12px 50px}
+  .item{padding:12px 13px;gap:11px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="login-card">
+    <div class="brand">THE <span>BLK</span> GROUP</div>
+    <div class="login-title">Action Items</div>
+    <div class="login-sub">Enter your access PIN to continue</div>
+    <input class="pin-input" id="pin" type="password" inputmode="numeric" placeholder="····" maxlength="6" autocomplete="off">
+    <button class="btn-primary" onclick="tryLogin()">Access →</button>
+    <div class="err" id="err"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="top-bar">
+    <div>
+      <div class="top-brand">THE <span>BLK</span> GROUP</div>
+      <div class="top-meta">Updated Aug 10, 2026</div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Sign out</button>
+  </div>
+
+  <div class="note-box">
+    <strong>Hey Brandon</strong> — this tracks what's needed to keep the machine running.
+    Check items off as you send them over. Damon sees this live.
+  </div>
+
+  <div class="progress-label">
+    <span>Overall progress</span>
+    <span id="prog-label">0 of 0 complete</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+
+  <!-- GRAPHICS -->
+  <div class="section">
+    <div class="section-head"><h2>Graphics &amp; Photos</h2><span class="count-badge" id="badge-graphics"></span></div>
+
+    <div class="item" data-id="saltillo-photos">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">395 Saltillo Road, Conway — listing photos</div>
+        <div class="item-detail">Zillow only has 2 photos for this property. Need 4+ photos from your Paragon export or camera roll — exterior hero shot + 3 interior money shots.</div>
+        <span class="item-tag tag-urgent">Blocks graphic</span>
+      </div>
+    </div>
+
+    <div class="item" data-id="eaglerock-data">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">380 Eagle Rock Circle, Hot Springs — specs + photos</div>
+        <div class="item-detail">No online listing found. Need: beds, baths, sq ft, sold price, and 4+ photos from Paragon.</div>
+        <span class="item-tag tag-urgent">Blocks graphic</span>
+      </div>
+    </div>
+
+    <div class="item" data-id="active-list">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">Active listing roster for ongoing graphics</div>
+        <div class="item-detail">Need your current active listings — address, status (New / Price Change / Under Contract / Welcome Home / Open House), beds/baths/sqft/price. This drives the daily 3x posting rotation.</div>
+        <span class="item-tag tag-needed">Needed for rotation</span>
+      </div>
+    </div>
+
+    <div class="item" data-id="full-carousel">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="running"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">Full-spread carousel — confirm photo count</div>
+        <div class="item-detail">You asked for all listing photos in sequence as one post. Current tool does cover + 3 slides. Confirm: do you want all photos (10–40) as a full swipe carousel? Needs a tool update.</div>
+        <span class="item-tag tag-needed">Decision needed</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- POSTING -->
+  <div class="section">
+    <div class="section-head"><h2>Posting &amp; Accounts</h2><span class="count-badge" id="badge-posting"></span></div>
+
+    <div class="item" data-id="ig-handle">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">Instagram + Facebook page handles / URLs</div>
+        <div class="item-detail">Need the exact account handles for The BLK Group on Instagram and Facebook so graphics can be matched to the right accounts for posting.</div>
+        <span class="item-tag tag-needed">Needed</span>
+      </div>
+    </div>
+
+    <div class="item" data-id="posting-access">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">How do you want graphics delivered for posting?</div>
+        <div class="item-detail">Options: (A) Damon drops finished files in a shared folder, you post manually. (B) Grant access to Meta Business Suite — Damon schedules posts directly. (C) Use your Slate Social account. Which one?</div>
+        <span class="item-tag tag-needed">Decision needed</span>
+      </div>
+    </div>
+
+    <div class="item" data-id="google-biz">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">Google Business — do you have a profile?</div>
+        <div class="item-detail">You mentioned posting to Google. Confirm your Google Business profile exists and is verified. If yes, share the business name/URL so posts can be scheduled there too.</div>
+        <span class="item-tag tag-needed">Needed</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOMINION -->
+  <div class="section">
+    <div class="section-head"><h2>Dominion — Lead Pipeline</h2><span class="count-badge" id="badge-dominion"></span></div>
+
+    <div class="item" data-id="paragon-login">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">CARMLS Paragon username + password</div>
+        <div class="item-detail">The daily expired listing pull is built and ready. It just needs your Paragon login to run. Send securely — not by text or email. Share in person or via Signal.</div>
+        <span class="item-tag tag-urgent">Starts the pipeline</span>
+      </div>
+    </div>
+
+    <div class="item" data-id="digest-phone">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">Your phone number for the morning digest</div>
+        <div class="item-detail">Every morning at 8 AM you'll get a text: "X leads ready — reply YES to authorize sends." Need your number to wire this up.</div>
+        <span class="item-tag tag-needed">Needed</span>
+      </div>
+    </div>
+
+    <div class="item" data-id="smartercontact">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">SmarterContact API key + campaign ID</div>
+        <div class="item-detail">Outbound SMS to leads goes through SmarterContact. Need your API key and the campaign ID for the expired listing outreach cadence.</div>
+        <span class="item-tag tag-needed">Needed for SMS</span>
+      </div>
+    </div>
+
+    <div class="item" data-id="supabase-key">
+      <div class="check" onclick="toggle(this)">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="item-body">
+        <div class="item-title">Rotate the LAB Supabase service key — security</div>
+        <div class="item-detail">Your LAB database service role key is publicly exposed in your website code. Anyone can read or write your LAB data. Takes 5 minutes to rotate in Supabase → Settings → API. Do this ASAP.</div>
+        <span class="item-tag tag-urgent">Security risk</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DONE -->
+  <div class="section">
+    <div class="section-head"><h2>Completed</h2><span class="count-badge" id="badge-done"></span></div>
+    <div id="done-list">
+      <div class="item done">
+        <div class="check checked">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">Just Sold graphics — 5 of 7 built</div>
+          <div class="item-detail">34 Stonegate Shores · 3458 Garden Club · 4 Almenara Lane · 12514 Colleen Drive · 121 Lily Drive — cover + 3 carousel slides each, ready to post.</div>
+          <span class="item-tag tag-ready">Ready</span>
+        </div>
+      </div>
+      <div class="item done">
+        <div class="check checked">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">Graphics automation pipeline built</div>
+          <div class="item-detail">Batch script, AI photo ranking, Zillow/Redfin photo pull, slug-aware photo matching — all running. New graphics generate in ~30 seconds.</div>
+          <span class="item-tag tag-ready">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const PIN = '2601'; // Change this to whatever PIN you want Brandon to use
+
+function tryLogin() {
+  const val = document.getElementById('pin').value.trim();
+  if (val === PIN) {
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadState();
+    updateProgress();
+  } else {
+    document.getElementById('err').textContent = 'Incorrect PIN — try again';
+    document.getElementById('pin').value = '';
+    document.getElementById('pin').focus();
+  }
+}
+
+function logout() {
+  document.getElementById('login').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('pin').value = '';
+}
+
+document.getElementById('pin').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryLogin();
+});
+
+function toggle(checkEl) {
+  const item = checkEl.closest('.item');
+  const id = item.dataset.id;
+  checkEl.classList.toggle('checked');
+  item.classList.toggle('done');
+  const state = JSON.parse(localStorage.getItem('blk_intake') || '{}');
+  state[id] = checkEl.classList.contains('checked');
+  localStorage.setItem('blk_intake', JSON.stringify(state));
+  updateProgress();
+}
+
+function loadState() {
+  const state = JSON.parse(localStorage.getItem('blk_intake') || '{}');
+  document.querySelectorAll('.item[data-id]').forEach(item => {
+    const id = item.dataset.id;
+    if (state[id]) {
+      item.classList.add('done');
+      item.querySelector('.check').classList.add('checked');
+    }
+  });
+}
+
+function updateProgress() {
+  const all = document.querySelectorAll('.item[data-id]');
+  const done = document.querySelectorAll('.item[data-id].done');
+  const total = all.length;
+  const complete = done.length;
+  const pct = total ? Math.round((complete / total) * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `${complete} of ${total} complete`;
+
+  // Section badges
+  const sections = {
+    graphics: ['saltillo-photos','eaglerock-data','active-list','full-carousel'],
+    posting: ['ig-handle','posting-access','google-biz'],
+    dominion: ['paragon-login','digest-phone','smartercontact','supabase-key'],
+  };
+  const state = JSON.parse(localStorage.getItem('blk_intake') || '{}');
+  for (const [key, ids] of Object.entries(sections)) {
+    const remaining = ids.filter(id => !state[id]).length;
+    const badge = document.getElementById('badge-' + key);
+    if (badge) badge.textContent = remaining + ' remaining';
+  }
+  const doneBadge = document.getElementById('badge-done');
+  if (doneBadge) doneBadge.textContent = '2 of 2';
+}
+</script>
+</body>
+</html>
