@@ -3,17 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BLK Group — Action Items</title>
+<title>BLK Group — Operations Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0b0c0e;--panel:#16181c;--panel2:#1e2127;--line:#2b2f37;--muted:#8b9099;
   --text:#eef0f3;--accent:#c19a5b;--accent-soft:#3a3326;--radius:12px;
-  --red:#e74c3c;--green:#27ae60;--orange:#f39c12}
+  --red:#e74c3c;--green:#27ae60;--orange:#f39c12;--sb:220px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100vh}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(--bg)}
 
-/* LOGIN */
-#login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+/* ── LOGIN ───────────────────────────────────────────────────── */
+#login{display:flex;align-items:center;justify-content:center;height:100vh;padding:20px}
 .login-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
   padding:40px 32px;max-width:340px;width:100%;text-align:center}
 .brand{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
@@ -28,38 +29,73 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 .btn-primary:hover{filter:brightness(1.08)}
 .err{color:var(--red);font-size:12px;margin-top:8px;min-height:18px}
 
-/* APP */
-#app{display:none;max-width:720px;margin:0 auto;padding:24px 16px 60px}
+/* ── APP SHELL ───────────────────────────────────────────────── */
+#app{display:none;height:100vh;flex-direction:row}
+
+/* ── SIDEBAR ─────────────────────────────────────────────────── */
+#sidebar{width:var(--sb);min-width:var(--sb);background:var(--panel);
+  border-right:1px solid var(--line);height:100vh;display:flex;flex-direction:column;
+  overflow-y:auto;flex-shrink:0}
+.sb-top{padding:20px 18px 16px;border-bottom:1px solid var(--line)}
+.sb-brand{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.sb-brand span{color:var(--accent)}
+.sb-subtitle{font-size:11px;color:var(--muted)}
+.sb-nav{list-style:none;padding:10px 0;flex:1}
+.sb-nav li{margin:2px 0}
+.sb-link{display:flex;align-items:center;justify-content:space-between;padding:8px 18px;
+  font-size:12px;color:var(--muted);text-decoration:none;
+  border-left:2px solid transparent;transition:all .12s;cursor:pointer}
+.sb-link:hover{color:var(--text);background:var(--panel2);border-left-color:var(--line)}
+.sb-link.active{color:var(--text);background:var(--panel2);border-left-color:var(--accent)}
+.sb-badge{font-size:10px;background:var(--accent-soft);color:var(--accent);
+  border-radius:999px;padding:1px 7px;font-weight:600}
+.sb-badge.ok{background:#1a2e1a;color:var(--green)}
+.sb-section-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);padding:12px 18px 4px;opacity:.6}
+.sb-footer{padding:14px 18px;border-top:1px solid var(--line)}
+.logout-btn{width:100%;background:none;border:1px solid var(--line);color:var(--muted);
+  border-radius:7px;padding:7px;font-size:11px;cursor:pointer;font-family:inherit;
+  letter-spacing:.1em;text-transform:uppercase}
+.logout-btn:hover{border-color:var(--accent);color:var(--text)}
+.sb-progress{margin-top:10px}
+.sb-prog-label{font-size:10px;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between}
+.sb-prog-bar{background:var(--panel2);border-radius:999px;height:4px;overflow:hidden}
+.sb-prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),#e8b96a);border-radius:999px;transition:width .4s}
+
+/* ── MAIN ────────────────────────────────────────────────────── */
+#main{flex:1;height:100vh;overflow-y:auto;padding:28px 28px 80px;max-width:760px}
 .top-bar{display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:26px}
+  border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px}
 .top-brand{font-size:11px;letter-spacing:.24em;text-transform:uppercase}
 .top-brand span{color:var(--accent)}
 .top-meta{font-size:12px;color:var(--muted)}
-.logout-btn{background:none;border:1px solid var(--line);color:var(--muted);
-  border-radius:7px;padding:6px 12px;font-size:11px;cursor:pointer;font-family:inherit;
-  letter-spacing:.1em;text-transform:uppercase}
-.logout-btn:hover{border-color:var(--accent);color:var(--text)}
 
-.section{margin-bottom:28px}
+.note-box{background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:13px 16px;font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:24px}
+.note-box strong{color:var(--text)}
+
+/* ── SECTIONS ────────────────────────────────────────────────── */
+.section{margin-bottom:32px;scroll-margin-top:20px}
 .section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .section-head h2{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600}
-.section-head h2::before{content:"";display:inline-block;width:16px;height:1px;background:var(--accent);opacity:.6;margin-right:8px;vertical-align:middle}
+.section-head h2::before{content:"";display:inline-block;width:16px;height:1px;
+  background:var(--accent);opacity:.6;margin-right:8px;vertical-align:middle}
 .count-badge{font-size:10px;background:var(--accent-soft);color:var(--accent);
   border-radius:999px;padding:2px 8px;font-weight:600}
+.count-badge.ok{background:#1a2e1a;color:var(--green)}
 
+/* ── ITEMS ───────────────────────────────────────────────────── */
 .item{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
   padding:14px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;
   transition:border-color .15s}
 .item.done{opacity:.45}
 .item.done .item-title{text-decoration:line-through}
 .item:not(.done):hover{border-color:var(--accent-soft)}
-
 .check{width:22px;height:22px;flex-shrink:0;border:2px solid var(--line);border-radius:6px;
   cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .15s}
 .check.checked{background:var(--green);border-color:var(--green)}
 .check svg{display:none}
 .check.checked svg{display:block}
-
 .item-body{flex:1;min-width:0}
 .item-title{font-size:14px;font-weight:500;margin-bottom:3px}
 .item-detail{font-size:12px;color:var(--muted);line-height:1.5}
@@ -69,15 +105,7 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 .tag-needed{background:#2b2416;color:var(--orange)}
 .tag-ready{background:#1a2e1a;color:var(--green)}
 
-.progress-bar{background:var(--panel2);border-radius:999px;height:6px;margin-bottom:26px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#e8b96a);border-radius:999px;transition:width .4s}
-.progress-label{font-size:11px;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between}
-
-.note-box{background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius);
-  padding:14px 16px;font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:20px}
-.note-box strong{color:var(--text)}
-
-/* BUILT & READY */
+/* ── BUILT & READY ───────────────────────────────────────────── */
 .built-caps{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
 .built-cap{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:13px 14px}
 .built-cap-icon{font-size:18px;margin-bottom:5px}
@@ -97,9 +125,46 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
   border:1px solid transparent;transition:border-color .15s}
 .dl-btn:hover{border-color:var(--accent)}
 
-@media(max-width:480px){
-  #app{padding:16px 12px 50px}
-  .item{padding:12px 13px;gap:11px}
+/* ── MAC MINI SETUP ──────────────────────────────────────────── */
+.setup-steps{counter-reset:step;display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.setup-step{display:flex;gap:14px;align-items:flex-start;background:var(--panel);
+  border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+.step-num{counter-increment:step;width:24px;height:24px;flex-shrink:0;border-radius:50%;
+  background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;margin-top:1px}
+.step-num::before{content:counter(step)}
+.step-body{flex:1;min-width:0}
+.step-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.step-detail{font-size:12px;color:var(--muted);line-height:1.5}
+.code-block{background:var(--bg);border:1px solid var(--line);border-radius:7px;
+  padding:10px 13px;font-family:ui-monospace,'SF Mono',monospace;font-size:11px;
+  color:#b0c4d8;margin-top:8px;white-space:pre;overflow-x:auto;line-height:1.6}
+.prompt-box{background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:12px}
+.prompt-box-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.prompt-box-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.copy-btn{font-size:11px;font-weight:600;background:var(--accent-soft);color:var(--accent);
+  border:1px solid transparent;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit;
+  transition:border-color .15s}
+.copy-btn:hover{border-color:var(--accent)}
+.copy-btn.copied{background:#1a2e1a;color:var(--green)}
+.prompt-text{font-size:12px;color:var(--muted);line-height:1.6;white-space:pre-wrap}
+.setup-note{font-size:12px;color:var(--muted);line-height:1.6;padding:10px 0}
+.setup-note strong{color:var(--text)}
+
+/* ── MOBILE ──────────────────────────────────────────────────── */
+@media(max-width:640px){
+  html,body{overflow:auto}
+  #app{flex-direction:column;height:auto}
+  #sidebar{width:100%;min-width:0;height:auto;border-right:none;border-bottom:1px solid var(--line);
+    flex-direction:row;align-items:center;padding:0;overflow-x:auto;overflow-y:hidden}
+  .sb-top{display:none}
+  .sb-nav{display:flex;flex-direction:row;padding:0;white-space:nowrap}
+  .sb-nav li{margin:0}
+  .sb-link{padding:12px 14px;border-left:none;border-bottom:2px solid transparent}
+  .sb-link.active{border-bottom-color:var(--accent);border-left-color:transparent;background:none}
+  .sb-section-label,.sb-footer,.sb-progress{display:none}
+  #main{height:auto;padding:16px 14px 60px;max-width:100%}
   .built-caps{grid-template-columns:1fr}
 }
 </style>
@@ -110,7 +175,7 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 <div id="login">
   <div class="login-card">
     <div class="brand">THE <span>BLK</span> GROUP</div>
-    <div class="login-title">Action Items</div>
+    <div class="login-title">Operations Dashboard</div>
     <div class="login-sub">Enter your access PIN to continue</div>
     <input class="pin-input" id="pin" type="password" inputmode="numeric" placeholder="····" maxlength="6" autocomplete="off">
     <button class="btn-primary" onclick="tryLogin()">Access →</button>
@@ -120,311 +185,430 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 
 <!-- APP -->
 <div id="app">
-  <div class="top-bar">
-    <div>
-      <div class="top-brand">THE <span>BLK</span> GROUP</div>
-      <div class="top-meta">Updated Aug 11, 2026</div>
-    </div>
-    <button class="logout-btn" onclick="logout()">Sign out</button>
-  </div>
 
-  <div class="note-box">
-    <strong>Hey Brandon</strong> — graphics are building. Below is what's ready to post, plus what's still needed to activate the full pipeline. Check items off as you send them over.
-  </div>
-
-  <!-- BUILT & READY -->
-  <div class="section">
-    <div class="section-head"><h2>Built &amp; Ready</h2><span class="count-badge" style="background:#1a2e1a;color:var(--green)">delivered</span></div>
-
-    <div class="built-caps">
-      <div class="built-cap">
-        <div class="built-cap-icon">⚡</div>
-        <div class="built-cap-label">30-sec graphic generation</div>
-        <div class="built-cap-sub">Automated pipeline. Address in, cover + 3 slides out. Runs on any listing.</div>
-      </div>
-      <div class="built-cap">
-        <div class="built-cap-icon">📸</div>
-        <div class="built-cap-label">AI photo selection</div>
-        <div class="built-cap-sub">Money shots first — water, outdoor living, views. Closets and pantries never make the cut.</div>
-      </div>
-      <div class="built-cap">
-        <div class="built-cap-icon">🔗</div>
-        <div class="built-cap-label">Zillow auto-pull</div>
-        <div class="built-cap-sub">Full photo stack sourced direct from Zillow at max resolution. No manual download needed.</div>
-      </div>
-      <div class="built-cap">
-        <div class="built-cap-icon">🤖</div>
-        <div class="built-cap-label">Dominion lead engine</div>
-        <div class="built-cap-sub">Expired + FSBO ingestion, skip trace, pitch scripts, HOT/WARM/COOL routing — fully built. Waiting on Paragon creds to activate.</div>
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sb-top">
+      <div class="sb-brand">THE <span>BLK</span> GROUP</div>
+      <div class="sb-subtitle">Operations Dashboard</div>
+      <div class="sb-progress" style="margin-top:12px">
+        <div class="sb-prog-label">
+          <span>Action items</span>
+          <span id="sb-prog-label">—</span>
+        </div>
+        <div class="sb-prog-bar"><div class="sb-prog-fill" id="sb-prog-fill" style="width:0%"></div></div>
       </div>
     </div>
 
-    <div class="prop-cards">
+    <div class="sb-section-label">Delivered</div>
+    <ul class="sb-nav" id="sb-nav">
+      <li><a class="sb-link" onclick="scrollTo('built')">Built &amp; Ready <span class="sb-badge ok">5 graphics</span></a></li>
+      <div class="sb-section-label">Action Items</div>
+      <li><a class="sb-link" onclick="scrollTo('graphics')">Graphics &amp; Photos <span class="sb-badge" id="sb-b-graphics">4</span></a></li>
+      <li><a class="sb-link" onclick="scrollTo('posting')">Posting &amp; Accounts <span class="sb-badge" id="sb-b-posting">3</span></a></li>
+      <li><a class="sb-link" onclick="scrollTo('dominion')">Dominion Pipeline <span class="sb-badge" id="sb-b-dominion">4</span></a></li>
+      <div class="sb-section-label">Setup</div>
+      <li><a class="sb-link" onclick="scrollTo('setup')">Mac Mini Setup</a></li>
+      <div class="sb-section-label">History</div>
+      <li><a class="sb-link" onclick="scrollTo('done')">Completed <span class="sb-badge ok" id="sb-b-done">2</span></a></li>
+    </ul>
 
-      <div class="prop-card">
-        <div class="prop-card-head">
-          <img class="prop-card-thumb" src="deliverables/34-stonegate-shores/cover.png" alt="34 Stonegate Shores">
-          <div class="prop-card-info">
-            <div class="prop-card-addr">34 Stonegate Shores, Hot Springs</div>
-            <span class="prop-card-status">Just Sold</span>
+    <div class="sb-footer">
+      <button class="logout-btn" onclick="logout()">Sign out</button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main id="main">
+    <div class="top-bar">
+      <div>
+        <div class="top-brand">THE <span>BLK</span> GROUP</div>
+        <div class="top-meta">Updated Aug 11, 2026</div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong>Hey Brandon</strong> — graphics are ready to download below. Scroll through the action items and check things off as you send them over. The Mac Mini Setup section has a one-command install for the daily expired listing pull.
+    </div>
+
+    <!-- ── BUILT & READY ────────────────────────────────────── -->
+    <div class="section" id="built">
+      <div class="section-head"><h2>Built &amp; Ready</h2><span class="count-badge ok">delivered</span></div>
+
+      <div class="built-caps">
+        <div class="built-cap">
+          <div class="built-cap-icon">⚡</div>
+          <div class="built-cap-label">30-sec graphic generation</div>
+          <div class="built-cap-sub">Automated pipeline. Address in, cover + 3 slides out. Runs on any listing.</div>
+        </div>
+        <div class="built-cap">
+          <div class="built-cap-icon">📸</div>
+          <div class="built-cap-label">AI photo selection</div>
+          <div class="built-cap-sub">Money shots first — water, pools, views. Closets and pantries never make the cut.</div>
+        </div>
+        <div class="built-cap">
+          <div class="built-cap-icon">🔗</div>
+          <div class="built-cap-label">Zillow auto-pull</div>
+          <div class="built-cap-sub">Full photo stack at max resolution. No manual download needed.</div>
+        </div>
+        <div class="built-cap">
+          <div class="built-cap-icon">🤖</div>
+          <div class="built-cap-label">Dominion lead engine</div>
+          <div class="built-cap-sub">Expired + FSBO ingestion, skip trace, scripts, HOT/WARM/COOL routing — built. Needs Paragon creds to activate.</div>
+        </div>
+      </div>
+
+      <div class="prop-cards">
+
+        <div class="prop-card">
+          <div class="prop-card-head">
+            <img class="prop-card-thumb" src="deliverables/34-stonegate-shores/cover.png" alt="34 Stonegate Shores">
+            <div class="prop-card-info">
+              <div class="prop-card-addr">34 Stonegate Shores, Hot Springs</div>
+              <span class="prop-card-status">Just Sold</span>
+            </div>
+          </div>
+          <div class="prop-card-files">
+            <a class="dl-btn" href="deliverables/34-stonegate-shores/cover.png" download>Cover</a>
+            <a class="dl-btn" href="deliverables/34-stonegate-shores/slide-1.png" download>Slide 1</a>
+            <a class="dl-btn" href="deliverables/34-stonegate-shores/slide-2.png" download>Slide 2</a>
+            <a class="dl-btn" href="deliverables/34-stonegate-shores/slide-3.png" download>Slide 3</a>
           </div>
         </div>
-        <div class="prop-card-files">
-          <a class="dl-btn" href="deliverables/34-stonegate-shores/cover.png" download>Cover</a>
-          <a class="dl-btn" href="deliverables/34-stonegate-shores/slide-1.png" download>Slide 1</a>
-          <a class="dl-btn" href="deliverables/34-stonegate-shores/slide-2.png" download>Slide 2</a>
-          <a class="dl-btn" href="deliverables/34-stonegate-shores/slide-3.png" download>Slide 3</a>
-        </div>
-      </div>
 
-      <div class="prop-card">
-        <div class="prop-card-head">
-          <img class="prop-card-thumb" src="deliverables/3458-garden-club/cover.png" alt="3458 Garden Club">
-          <div class="prop-card-info">
-            <div class="prop-card-addr">3458 Garden Club, Bryant</div>
-            <span class="prop-card-status">Just Sold</span>
+        <div class="prop-card">
+          <div class="prop-card-head">
+            <img class="prop-card-thumb" src="deliverables/3458-garden-club/cover.png" alt="3458 Garden Club">
+            <div class="prop-card-info">
+              <div class="prop-card-addr">3458 Garden Club, Bryant</div>
+              <span class="prop-card-status">Just Sold</span>
+            </div>
+          </div>
+          <div class="prop-card-files">
+            <a class="dl-btn" href="deliverables/3458-garden-club/cover.png" download>Cover</a>
+            <a class="dl-btn" href="deliverables/3458-garden-club/slide-1.png" download>Slide 1</a>
+            <a class="dl-btn" href="deliverables/3458-garden-club/slide-2.png" download>Slide 2</a>
+            <a class="dl-btn" href="deliverables/3458-garden-club/slide-3.png" download>Slide 3</a>
           </div>
         </div>
-        <div class="prop-card-files">
-          <a class="dl-btn" href="deliverables/3458-garden-club/cover.png" download>Cover</a>
-          <a class="dl-btn" href="deliverables/3458-garden-club/slide-1.png" download>Slide 1</a>
-          <a class="dl-btn" href="deliverables/3458-garden-club/slide-2.png" download>Slide 2</a>
-          <a class="dl-btn" href="deliverables/3458-garden-club/slide-3.png" download>Slide 3</a>
-        </div>
-      </div>
 
-      <div class="prop-card">
-        <div class="prop-card-head">
-          <img class="prop-card-thumb" src="deliverables/4-almenara-lane/cover.png" alt="4 Almenara Lane">
-          <div class="prop-card-info">
-            <div class="prop-card-addr">4 Almenara Lane, Hot Springs Village</div>
-            <span class="prop-card-status">Just Sold</span>
+        <div class="prop-card">
+          <div class="prop-card-head">
+            <img class="prop-card-thumb" src="deliverables/4-almenara-lane/cover.png" alt="4 Almenara Lane">
+            <div class="prop-card-info">
+              <div class="prop-card-addr">4 Almenara Lane, Hot Springs Village</div>
+              <span class="prop-card-status">Just Sold</span>
+            </div>
+          </div>
+          <div class="prop-card-files">
+            <a class="dl-btn" href="deliverables/4-almenara-lane/cover.png" download>Cover</a>
+            <a class="dl-btn" href="deliverables/4-almenara-lane/slide-1.png" download>Slide 1</a>
+            <a class="dl-btn" href="deliverables/4-almenara-lane/slide-2.png" download>Slide 2</a>
+            <a class="dl-btn" href="deliverables/4-almenara-lane/slide-3.png" download>Slide 3</a>
           </div>
         </div>
-        <div class="prop-card-files">
-          <a class="dl-btn" href="deliverables/4-almenara-lane/cover.png" download>Cover</a>
-          <a class="dl-btn" href="deliverables/4-almenara-lane/slide-1.png" download>Slide 1</a>
-          <a class="dl-btn" href="deliverables/4-almenara-lane/slide-2.png" download>Slide 2</a>
-          <a class="dl-btn" href="deliverables/4-almenara-lane/slide-3.png" download>Slide 3</a>
-        </div>
-      </div>
 
-      <div class="prop-card">
-        <div class="prop-card-head">
-          <img class="prop-card-thumb" src="deliverables/12514-colleen-drive/cover.png" alt="12514 Colleen Drive">
-          <div class="prop-card-info">
-            <div class="prop-card-addr">12514 Colleen Drive, Little Rock</div>
-            <span class="prop-card-status">Just Sold</span>
+        <div class="prop-card">
+          <div class="prop-card-head">
+            <img class="prop-card-thumb" src="deliverables/12514-colleen-drive/cover.png" alt="12514 Colleen Drive">
+            <div class="prop-card-info">
+              <div class="prop-card-addr">12514 Colleen Drive, Little Rock</div>
+              <span class="prop-card-status">Just Sold</span>
+            </div>
+          </div>
+          <div class="prop-card-files">
+            <a class="dl-btn" href="deliverables/12514-colleen-drive/cover.png" download>Cover</a>
+            <a class="dl-btn" href="deliverables/12514-colleen-drive/slide-1.png" download>Slide 1</a>
+            <a class="dl-btn" href="deliverables/12514-colleen-drive/slide-2.png" download>Slide 2</a>
+            <a class="dl-btn" href="deliverables/12514-colleen-drive/slide-3.png" download>Slide 3</a>
           </div>
         </div>
-        <div class="prop-card-files">
-          <a class="dl-btn" href="deliverables/12514-colleen-drive/cover.png" download>Cover</a>
-          <a class="dl-btn" href="deliverables/12514-colleen-drive/slide-1.png" download>Slide 1</a>
-          <a class="dl-btn" href="deliverables/12514-colleen-drive/slide-2.png" download>Slide 2</a>
-          <a class="dl-btn" href="deliverables/12514-colleen-drive/slide-3.png" download>Slide 3</a>
-        </div>
-      </div>
 
-      <div class="prop-card">
-        <div class="prop-card-head">
-          <img class="prop-card-thumb" src="deliverables/121-lily-drive/cover.png" alt="121 Lily Drive">
-          <div class="prop-card-info">
-            <div class="prop-card-addr">121 Lily Drive, Maumelle</div>
-            <span class="prop-card-status">Just Sold</span>
+        <div class="prop-card">
+          <div class="prop-card-head">
+            <img class="prop-card-thumb" src="deliverables/121-lily-drive/cover.png" alt="121 Lily Drive">
+            <div class="prop-card-info">
+              <div class="prop-card-addr">121 Lily Drive, Maumelle</div>
+              <span class="prop-card-status">Just Sold</span>
+            </div>
+          </div>
+          <div class="prop-card-files">
+            <a class="dl-btn" href="deliverables/121-lily-drive/cover.png" download>Cover</a>
+            <a class="dl-btn" href="deliverables/121-lily-drive/slide-1.png" download>Slide 1</a>
+            <a class="dl-btn" href="deliverables/121-lily-drive/slide-2.png" download>Slide 2</a>
+            <a class="dl-btn" href="deliverables/121-lily-drive/slide-3.png" download>Slide 3</a>
           </div>
         </div>
-        <div class="prop-card-files">
-          <a class="dl-btn" href="deliverables/121-lily-drive/cover.png" download>Cover</a>
-          <a class="dl-btn" href="deliverables/121-lily-drive/slide-1.png" download>Slide 1</a>
-          <a class="dl-btn" href="deliverables/121-lily-drive/slide-2.png" download>Slide 2</a>
-          <a class="dl-btn" href="deliverables/121-lily-drive/slide-3.png" download>Slide 3</a>
-        </div>
-      </div>
 
-    </div>
-  </div>
-
-  <div class="progress-label">
-    <span>Overall progress</span>
-    <span id="prog-label">0 of 0 complete</span>
-  </div>
-  <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
-
-  <!-- GRAPHICS -->
-  <div class="section">
-    <div class="section-head"><h2>Graphics &amp; Photos</h2><span class="count-badge" id="badge-graphics"></span></div>
-
-    <div class="item" data-id="saltillo-photos">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">395 Saltillo Road, Conway — listing photos</div>
-        <div class="item-detail">Zillow only has 2 photos for this property. Need 4+ photos from your Paragon export or camera roll — exterior hero shot + 3 interior money shots.</div>
-        <span class="item-tag tag-urgent">Blocks graphic</span>
       </div>
     </div>
 
-    <div class="item" data-id="eaglerock-data">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">380 Eagle Rock Circle, Hot Springs — specs + photos</div>
-        <div class="item-detail">No online listing found. Need: beds, baths, sq ft, sold price, and 4+ photos from Paragon.</div>
-        <span class="item-tag tag-urgent">Blocks graphic</span>
-      </div>
-    </div>
+    <!-- ── GRAPHICS & PHOTOS ─────────────────────────────────── -->
+    <div class="section" id="graphics">
+      <div class="section-head"><h2>Graphics &amp; Photos</h2><span class="count-badge" id="badge-graphics"></span></div>
 
-    <div class="item" data-id="active-list">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">Active listing roster for ongoing graphics</div>
-        <div class="item-detail">Need your current active listings — address, status (New / Price Change / Under Contract / Welcome Home / Open House), beds/baths/sqft/price. This drives the daily 3x posting rotation.</div>
-        <span class="item-tag tag-needed">Needed for rotation</span>
-      </div>
-    </div>
-
-    <div class="item" data-id="full-carousel">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="running"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">Full-spread carousel — confirm photo count</div>
-        <div class="item-detail">You asked for all listing photos in sequence as one post. Current tool does cover + 3 slides. Confirm: do you want all photos (10–40) as a full swipe carousel? Needs a tool update.</div>
-        <span class="item-tag tag-needed">Decision needed</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- POSTING -->
-  <div class="section">
-    <div class="section-head"><h2>Posting &amp; Accounts</h2><span class="count-badge" id="badge-posting"></span></div>
-
-    <div class="item" data-id="ig-handle">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">Instagram + Facebook page handles / URLs</div>
-        <div class="item-detail">Need the exact account handles for The BLK Group on Instagram and Facebook so graphics can be matched to the right accounts for posting.</div>
-        <span class="item-tag tag-needed">Needed</span>
-      </div>
-    </div>
-
-    <div class="item" data-id="posting-access">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">How do you want graphics delivered for posting?</div>
-        <div class="item-detail">Options: (A) Damon drops finished files in a shared folder, you post manually. (B) Grant access to Meta Business Suite — Damon schedules posts directly. (C) Use your Slate Social account. Which one?</div>
-        <span class="item-tag tag-needed">Decision needed</span>
-      </div>
-    </div>
-
-    <div class="item" data-id="google-biz">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">Google Business — do you have a profile?</div>
-        <div class="item-detail">You mentioned posting to Google. Confirm your Google Business profile exists and is verified. If yes, share the business name/URL so posts can be scheduled there too.</div>
-        <span class="item-tag tag-needed">Needed</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- DOMINION -->
-  <div class="section">
-    <div class="section-head"><h2>Dominion — Lead Pipeline</h2><span class="count-badge" id="badge-dominion"></span></div>
-
-    <div class="item" data-id="paragon-login">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">CARMLS Paragon username + password</div>
-        <div class="item-detail">The daily expired listing pull is built and ready. It just needs your Paragon login to run. Send securely — not by text or email. Share in person or via Signal.</div>
-        <span class="item-tag tag-urgent">Starts the pipeline</span>
-      </div>
-    </div>
-
-    <div class="item" data-id="digest-phone">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">Your phone number for the morning digest</div>
-        <div class="item-detail">Every morning at 8 AM you'll get a text: "X leads ready — reply YES to authorize sends." Need your number to wire this up.</div>
-        <span class="item-tag tag-needed">Needed</span>
-      </div>
-    </div>
-
-    <div class="item" data-id="smartercontact">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">SmarterContact API key + campaign ID</div>
-        <div class="item-detail">Outbound SMS to leads goes through SmarterContact. Need your API key and the campaign ID for the expired listing outreach cadence.</div>
-        <span class="item-tag tag-needed">Needed for SMS</span>
-      </div>
-    </div>
-
-    <div class="item" data-id="supabase-key">
-      <div class="check" onclick="toggle(this)">
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="item-body">
-        <div class="item-title">Rotate the LAB Supabase service key — security</div>
-        <div class="item-detail">Your LAB database service role key is publicly exposed in your website code. Anyone can read or write your LAB data. Takes 5 minutes to rotate in Supabase → Settings → API. Do this ASAP.</div>
-        <span class="item-tag tag-urgent">Security risk</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- DONE -->
-  <div class="section">
-    <div class="section-head"><h2>Completed</h2><span class="count-badge" id="badge-done"></span></div>
-    <div id="done-list">
-      <div class="item done">
-        <div class="check checked">
+      <div class="item" data-id="saltillo-photos">
+        <div class="check" onclick="toggle(this)">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="item-body">
-          <div class="item-title">Just Sold graphics — 5 of 7 built</div>
-          <div class="item-detail">34 Stonegate Shores · 3458 Garden Club · 4 Almenara Lane · 12514 Colleen Drive · 121 Lily Drive — cover + 3 carousel slides each, ready to post.</div>
-          <span class="item-tag tag-ready">Ready</span>
+          <div class="item-title">395 Saltillo Road, Conway — listing photos</div>
+          <div class="item-detail">Zillow only has 2 photos. Need 4+ from your Paragon export or camera roll — exterior hero + 3 interior money shots.</div>
+          <span class="item-tag tag-urgent">Blocks graphic</span>
         </div>
       </div>
-      <div class="item done">
-        <div class="check checked">
+
+      <div class="item" data-id="eaglerock-data">
+        <div class="check" onclick="toggle(this)">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="item-body">
-          <div class="item-title">Graphics automation pipeline built</div>
-          <div class="item-detail">Batch script, AI photo ranking, Zillow/Redfin photo pull, slug-aware photo matching — all running. New graphics generate in ~30 seconds.</div>
-          <span class="item-tag tag-ready">Done</span>
+          <div class="item-title">380 Eagle Rock Circle, Hot Springs — specs + photos</div>
+          <div class="item-detail">No online listing found. Need: beds, baths, sq ft, sold price, and 4+ photos from Paragon.</div>
+          <span class="item-tag tag-urgent">Blocks graphic</span>
+        </div>
+      </div>
+
+      <div class="item" data-id="active-list">
+        <div class="check" onclick="toggle(this)">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">Active listing roster for ongoing graphics</div>
+          <div class="item-detail">Need current active listings — address, status (New / Price Change / Under Contract / Welcome Home / Open House), beds/baths/sqft/price. Drives the daily 3x posting rotation.</div>
+          <span class="item-tag tag-needed">Needed for rotation</span>
+        </div>
+      </div>
+
+      <div class="item" data-id="full-carousel">
+        <div class="check" onclick="toggle(this)">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">Full-spread carousel — confirm photo count</div>
+          <div class="item-detail">Current tool: cover + 3 slides. Confirm: do you want all listing photos (10–40) as one full swipe carousel? Needs a tool update.</div>
+          <span class="item-tag tag-needed">Decision needed</span>
         </div>
       </div>
     </div>
-  </div>
 
+    <!-- ── POSTING & ACCOUNTS ────────────────────────────────── -->
+    <div class="section" id="posting">
+      <div class="section-head"><h2>Posting &amp; Accounts</h2><span class="count-badge" id="badge-posting"></span></div>
+
+      <div class="item" data-id="ig-handle">
+        <div class="check" onclick="toggle(this)">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">Instagram + Facebook page handles / URLs</div>
+          <div class="item-detail">Need the exact account handles for The BLK Group on Instagram and Facebook so graphics can be matched to the right accounts for posting.</div>
+          <span class="item-tag tag-needed">Needed</span>
+        </div>
+      </div>
+
+      <div class="item" data-id="posting-access">
+        <div class="check" onclick="toggle(this)">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">How do you want graphics delivered for posting?</div>
+          <div class="item-detail">Options: (A) Damon drops finished files in a shared folder, you post manually. (B) Grant Meta Business Suite access — Damon schedules posts directly. (C) Use your Slate Social account. Which one?</div>
+          <span class="item-tag tag-needed">Decision needed</span>
+        </div>
+      </div>
+
+      <div class="item" data-id="google-biz">
+        <div class="check" onclick="toggle(this)">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">Google Business — do you have a profile?</div>
+          <div class="item-detail">Confirm your Google Business profile exists and is verified. If yes, share the profile URL so posts can be scheduled there too.</div>
+          <span class="item-tag tag-needed">Needed</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DOMINION PIPELINE ─────────────────────────────────── -->
+    <div class="section" id="dominion">
+      <div class="section-head"><h2>Dominion — Lead Pipeline</h2><span class="count-badge" id="badge-dominion"></span></div>
+
+      <div class="item" data-id="paragon-login">
+        <div class="check" onclick="toggle(this)">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">CARMLS Paragon username + password</div>
+          <div class="item-detail">The daily expired listing pull is built and ready. It just needs your Paragon login to run. Share in person or via Signal — not text or email.</div>
+          <span class="item-tag tag-urgent">Starts the pipeline</span>
+        </div>
+      </div>
+
+      <div class="item" data-id="digest-phone">
+        <div class="check" onclick="toggle(this)">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">Your phone number for the morning digest</div>
+          <div class="item-detail">Every morning at 8 AM you get a text: "X leads ready — reply YES to authorize sends." Need your number to wire this up.</div>
+          <span class="item-tag tag-needed">Needed</span>
+        </div>
+      </div>
+
+      <div class="item" data-id="smartercontact">
+        <div class="check" onclick="toggle(this)">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">SmarterContact API key + campaign ID</div>
+          <div class="item-detail">Outbound SMS to leads goes through SmarterContact. Need your API key and the campaign ID for the expired listing outreach cadence.</div>
+          <span class="item-tag tag-needed">Needed for SMS</span>
+        </div>
+      </div>
+
+      <div class="item" data-id="supabase-key">
+        <div class="check" onclick="toggle(this)">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="item-body">
+          <div class="item-title">Rotate the LAB Supabase service key — security</div>
+          <div class="item-detail">Your LAB database service role key is publicly exposed in your website code. Anyone can read or write your LAB data. Takes 5 minutes: Supabase → Settings → API → Regenerate. Do this ASAP.</div>
+          <span class="item-tag tag-urgent">Security risk</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MAC MINI SETUP ────────────────────────────────────── -->
+    <div class="section" id="setup">
+      <div class="section-head"><h2>Mac Mini Setup — Daily MLS Pull</h2><span class="count-badge">one-time</span></div>
+
+      <div class="note-box" style="margin-bottom:16px">
+        <strong>What this does:</strong> Every morning at 6 AM, your Mac Mini logs into CARMLS Paragon, pulls today's expired listings, and pushes them to Dominion automatically. You never touch it again after setup.
+      </div>
+
+      <div class="prompt-box">
+        <div class="prompt-box-head">
+          <span class="prompt-box-label">Paste this into your Claude / Jarvis</span>
+          <button class="copy-btn" id="copy-claude-prompt" onclick="copyPrompt('claude-prompt','copy-claude-prompt')">Copy</button>
+        </div>
+        <div class="prompt-text" id="claude-prompt">Open Terminal on this Mac and run these commands one at a time. Tell me the output of each before moving to the next.
+
+1.  git clone https://github.com/damonwillis-ops/dominion-mls-sync.git
+
+2.  cd dominion-mls-sync
+
+3.  python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+
+4.  python sync.py --setup
+
+When the setup wizard asks for your Paragon username and password, enter your CARMLS login (same one you use at carmls.paragonrels.com). Damon will send the Supabase connection details separately — leave those blank for now if asked.
+
+If any step errors, paste the exact error message here and I will fix it.</div>
+      </div>
+
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="step-num"></div>
+          <div class="step-body">
+            <div class="step-title">Open Terminal</div>
+            <div class="step-detail">Press <strong>Cmd + Space</strong>, type <strong>Terminal</strong>, hit Enter.</div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num"></div>
+          <div class="step-body">
+            <div class="step-title">Clone the sync repo</div>
+            <div class="code-block">git clone https://github.com/damonwillis-ops/dominion-mls-sync.git
+cd dominion-mls-sync</div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num"></div>
+          <div class="step-body">
+            <div class="step-title">Install dependencies</div>
+            <div class="step-detail">One command — installs Python packages and the browser engine (~200MB, one-time).</div>
+            <div class="code-block">python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt</div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num"></div>
+          <div class="step-body">
+            <div class="step-title">Run the setup wizard</div>
+            <div class="step-detail">Asks for your Paragon login, tests it, installs the browser automation, and sets up the 6 AM daily job automatically.</div>
+            <div class="code-block">python sync.py --setup</div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num"></div>
+          <div class="step-body">
+            <div class="step-title">Test it</div>
+            <div class="step-detail">Runs a live sync — you'll see it log in to Paragon, pull listings, and upload. If it works, you're done. Runs on its own at 6 AM every day after this.</div>
+            <div class="code-block">python sync.py</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="setup-note">
+        <strong>If something breaks later:</strong> Open Claude on the Mac Mini and say:<br>
+        <em>"Read data/logs/sync.log in my dominion-mls-sync folder and fix the issue."</em><br><br>
+        <strong>Getting updates from Damon:</strong> <code style="font-size:11px;background:var(--bg);padding:2px 6px;border-radius:4px">cd ~/dominion-mls-sync &amp;&amp; git pull</code>
+      </div>
+    </div>
+
+    <!-- ── COMPLETED ──────────────────────────────────────────── -->
+    <div class="section" id="done">
+      <div class="section-head"><h2>Completed</h2><span class="count-badge ok" id="badge-done">2 of 2</span></div>
+      <div id="done-list">
+        <div class="item done">
+          <div class="check checked">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="item-body">
+            <div class="item-title">Just Sold graphics — 5 of 7 built</div>
+            <div class="item-detail">34 Stonegate Shores · 3458 Garden Club · 4 Almenara Lane · 12514 Colleen Drive · 121 Lily Drive — cover + 3 carousel slides each, downloadable above.</div>
+            <span class="item-tag tag-ready">Ready</span>
+          </div>
+        </div>
+        <div class="item done">
+          <div class="check checked">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="item-body">
+            <div class="item-title">Graphics automation pipeline</div>
+            <div class="item-detail">Batch script, AI photo ranking, Zillow photo pull, slug-aware matching — all running. New graphics generate in ~30 seconds.</div>
+            <span class="item-tag tag-ready">Done</span>
+          </div>
+        </div>
+        <div class="item done">
+          <div class="check checked">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="item-body">
+            <div class="item-title">Dominion lead engine — core pipeline</div>
+            <div class="item-detail">Expired + FSBO ingestion, Tracerfy skip trace, pitch script sequencing, HOT/WARM/COOL dispatcher, attribution + payment tracking — all built and staged.</div>
+            <span class="item-tag tag-ready">Waiting on Paragon creds</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
 </div>
 
 <script>
-const PIN = '2601'; // Change this to whatever PIN you want Brandon to use
+const PIN = '2601';
 
 function tryLogin() {
   const val = document.getElementById('pin').value.trim();
   if (val === PIN) {
     document.getElementById('login').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
+    document.getElementById('app').style.display = 'flex';
     loadState();
     updateProgress();
+    initScrollSpy();
   } else {
     document.getElementById('err').textContent = 'Incorrect PIN — try again';
     document.getElementById('pin').value = '';
@@ -441,6 +625,11 @@ function logout() {
 document.getElementById('pin').addEventListener('keydown', e => {
   if (e.key === 'Enter') tryLogin();
 });
+
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 function toggle(checkEl) {
   const item = checkEl.closest('.item');
@@ -464,29 +653,65 @@ function loadState() {
   });
 }
 
+const SECTIONS = {
+  graphics: ['saltillo-photos','eaglerock-data','active-list','full-carousel'],
+  posting:  ['ig-handle','posting-access','google-biz'],
+  dominion: ['paragon-login','digest-phone','smartercontact','supabase-key'],
+};
+
 function updateProgress() {
   const all = document.querySelectorAll('.item[data-id]');
   const done = document.querySelectorAll('.item[data-id].done');
   const total = all.length;
   const complete = done.length;
   const pct = total ? Math.round((complete / total) * 100) : 0;
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-label').textContent = `${complete} of ${total} complete`;
 
-  // Section badges
-  const sections = {
-    graphics: ['saltillo-photos','eaglerock-data','active-list','full-carousel'],
-    posting: ['ig-handle','posting-access','google-biz'],
-    dominion: ['paragon-login','digest-phone','smartercontact','supabase-key'],
-  };
+  const fill = document.getElementById('sb-prog-fill');
+  const label = document.getElementById('sb-prog-label');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = `${complete} / ${total}`;
+
   const state = JSON.parse(localStorage.getItem('blk_intake') || '{}');
-  for (const [key, ids] of Object.entries(sections)) {
+  for (const [key, ids] of Object.entries(SECTIONS)) {
     const remaining = ids.filter(id => !state[id]).length;
-    const badge = document.getElementById('badge-' + key);
-    if (badge) badge.textContent = remaining + ' remaining';
+    const mainBadge = document.getElementById('badge-' + key);
+    const sbBadge   = document.getElementById('sb-b-' + key);
+    const text = remaining + ' remaining';
+    if (mainBadge) mainBadge.textContent = text;
+    if (sbBadge)   sbBadge.textContent   = remaining;
   }
-  const doneBadge = document.getElementById('badge-done');
-  if (doneBadge) doneBadge.textContent = '2 of 2';
+}
+
+// Scroll spy
+function initScrollSpy() {
+  const sections = ['built','graphics','posting','dominion','setup','done'];
+  const links = document.querySelectorAll('.sb-link');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const match = [...links].find(l => {
+          const fn = l.getAttribute('onclick') || '';
+          return fn.includes("'" + e.target.id + "'");
+        });
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { root: document.getElementById('main'), threshold: 0.25 });
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) obs.observe(el);
+  });
+}
+
+function copyPrompt(textId, btnId) {
+  const text = document.getElementById(textId).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById(btnId);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
 }
 </script>
 </body>
