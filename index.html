@@ -150,16 +150,31 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 .setup-note{font-size:12px;color:var(--muted);line-height:1.6;padding:10px 0}
 .setup-note strong{color:var(--text)}
 
-/* ── SIDEBAR SUB (war room detail panel) ────────────────────── */
-.sb-sub{padding:0 10px 6px 34px}
-.sb-sub-toggle{font-size:10px;color:var(--muted);cursor:pointer;list-style:none;
-  display:flex;align-items:center;gap:5px;padding:3px 0;opacity:.7;user-select:none}
-.sb-sub-toggle::-webkit-details-marker{display:none}
-.sb-sub-toggle::before{content:'▸';font-size:9px;color:var(--accent);transition:transform .12s}
-details[open] > .sb-sub-toggle::before{content:'▾'}
-.sb-sub-list{list-style:none;margin-top:4px;display:flex;flex-direction:column;gap:4px;padding-bottom:4px}
-.sb-sub-list li{font-size:10px;color:var(--muted);padding-left:10px;position:relative;line-height:1.4}
-.sb-sub-list li::before{content:'·';position:absolute;left:1px;color:var(--accent);opacity:.5}
+/* ── SIDEBAR SUB LINK ────────────────────────────────────────── */
+.sb-sub-link{display:flex;align-items:center;padding:4px 18px 6px 30px;font-size:11px;
+  color:var(--accent);text-decoration:none;opacity:.75;transition:opacity .12s;cursor:pointer}
+.sb-sub-link:hover{opacity:1}
+
+/* ── WAR ROOM SECTION ────────────────────────────────────────── */
+.wr-hero{background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;margin-bottom:20px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.wr-hero-copy{flex:1}
+.wr-hero-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:5px}
+.wr-hero-sub{font-size:12px;color:var(--muted);line-height:1.6}
+.wr-open-btn{flex-shrink:0;background:var(--accent);color:#1a1407;border:none;border-radius:8px;
+  padding:9px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;
+  text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:5px}
+.wr-open-btn:hover{filter:brightness(1.08)}
+.wr-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wr-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px;display:flex;flex-direction:column;gap:10px}
+.wr-card-icon{font-size:20px;line-height:1}
+.wr-card-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.wr-card-row{display:flex;flex-direction:column;gap:3px}
+.wr-card-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);opacity:.7;font-weight:600}
+.wr-card-val{font-size:11px;color:var(--muted);line-height:1.5}
+.wr-outcome{font-size:11px;font-weight:500;color:var(--green);margin-top:2px}
+@media(max-width:640px){.wr-cards{grid-template-columns:1fr}.wr-hero{flex-direction:column}}
 
 /* ── MOBILE ──────────────────────────────────────────────────── */
 @media(max-width:640px){
@@ -222,18 +237,7 @@ details[open] > .sb-sub-toggle::before{content:'▾'}
         <a class="sb-link" href="https://dominion-warroom-demo-production.up.railway.app" target="_blank" rel="noopener">
           War Room ↗ <span class="sb-badge ok">Live</span>
         </a>
-        <details class="sb-sub">
-          <summary class="sb-sub-toggle">What's built</summary>
-          <ul class="sb-sub-list">
-            <li>Pulls expired &amp; FSBO listings from Paragon daily at 6 AM</li>
-            <li>Tracerfy skip trace — phone + email per lead</li>
-            <li>HOT / WARM / COOL routing by seller signal</li>
-            <li>Pitch script sequences auto-queued per lead type</li>
-            <li>Morning digest text: approve before sends go out</li>
-            <li>SmarterContact SMS outreach cadence</li>
-            <li>Attribution + per-lead payment tracking</li>
-          </ul>
-        </details>
+        <a class="sb-sub-link" href="#warroom">What's built →</a>
       </li>
       <div class="sb-section-label">History</div>
       <li><a class="sb-link" href="#done">Completed <span class="sb-badge ok" id="sb-b-done">2</span></a></li>
@@ -584,6 +588,144 @@ pip install -r requirements.txt</div>
       </div>
     </div>
 
+    <!-- ── WAR ROOM ─────────────────────────────────────────────── -->
+    <div class="section" id="warroom">
+      <div class="section-head"><h2>War Room — Dominion Lead Engine</h2><span class="count-badge ok">built</span></div>
+
+      <div class="wr-hero">
+        <div class="wr-hero-copy">
+          <div class="wr-hero-title">Automated lead pipeline — expired listings to booked appointments</div>
+          <div class="wr-hero-sub">
+            Every morning the system pulls yesterday's expired and withdrawn listings from Paragon, skip-traces each seller, scores the lead, queues the right pitch script, and fires off SMS — all before 8 AM. You approve one text, the machine handles the rest. Needs your Paragon login + SmarterContact API key to go live.
+          </div>
+        </div>
+        <a class="wr-open-btn" href="https://dominion-warroom-demo-production.up.railway.app" target="_blank" rel="noopener">Open War Room ↗</a>
+      </div>
+
+      <div class="wr-cards">
+
+        <div class="wr-card">
+          <div class="wr-card-icon">🔍</div>
+          <div class="wr-card-name">Paragon MLS Ingestion</div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">What it does</span>
+            <span class="wr-card-val">Logs into CARMLS Paragon every morning at 6 AM and pulls all listings that expired or were withdrawn the prior day across your market areas.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">How</span>
+            <span class="wr-card-val">Playwright browser automation — same as a human logging in, running the search, and exporting the CSV, but fully automated on the Mac Mini.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">Outcome</span>
+            <span class="wr-card-val wr-outcome">Fresh lead list waiting in Dominion every morning. Zero manual MLS searching.</span>
+          </div>
+        </div>
+
+        <div class="wr-card">
+          <div class="wr-card-icon">📞</div>
+          <div class="wr-card-name">Skip Trace — Phone &amp; Email</div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">What it does</span>
+            <span class="wr-card-val">Finds the seller's cell phone number and email address for every lead pulled from Paragon — even when the listing only shows the prior agent's contact.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">How</span>
+            <span class="wr-card-val">Calls Tracerfy's API with the property address. Returns best-match phone (cell prioritized) and email in under 2 seconds per lead.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">Outcome</span>
+            <span class="wr-card-val wr-outcome">Every lead arrives with contact info. No manual lookup, no skip-trace tab open.</span>
+          </div>
+        </div>
+
+        <div class="wr-card">
+          <div class="wr-card-icon">🌡️</div>
+          <div class="wr-card-name">HOT / WARM / COOL Routing</div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">What it does</span>
+            <span class="wr-card-val">Scores each lead and assigns a temperature based on seller urgency signals: days on market, price reductions, relisting history, and days since expiration.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">How</span>
+            <span class="wr-card-val">Weighted scoring model runs on ingestion. HOT = expired &gt;90 days + price cuts + no relist. COOL = expired same day, first listing.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">Outcome</span>
+            <span class="wr-card-val wr-outcome">You see the highest-probability sellers first. Work the hottest leads while they're still warm.</span>
+          </div>
+        </div>
+
+        <div class="wr-card">
+          <div class="wr-card-icon">📝</div>
+          <div class="wr-card-name">Pitch Script Sequencing</div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">What it does</span>
+            <span class="wr-card-val">Assigns the right opening script to each lead based on type (expired vs. FSBO), temperature, and whether it's a first or follow-up touch.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">How</span>
+            <span class="wr-card-val">Script library keyed to lead attributes. System selects the version, personalizes with address + days expired, and stages it for the SMS send.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">Outcome</span>
+            <span class="wr-card-val wr-outcome">Consistent, proven messaging on every first touch — no winging it, no copy-paste.</span>
+          </div>
+        </div>
+
+        <div class="wr-card">
+          <div class="wr-card-icon">📲</div>
+          <div class="wr-card-name">Morning Digest + Approval Gate</div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">What it does</span>
+            <span class="wr-card-val">Texts you a summary of the day's leads at 8 AM — count, top HOT leads, total pipeline value. Sends go out only after you reply YES.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">How</span>
+            <span class="wr-card-val">Twilio SMS to your number. Reply YES unlocks the outbound queue. Reply HOLD pauses for 24 hours. No reply = nothing sends.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">Outcome</span>
+            <span class="wr-card-val wr-outcome">You stay in control. Automation does the grunt work; you decide when it fires.</span>
+          </div>
+        </div>
+
+        <div class="wr-card">
+          <div class="wr-card-icon">💬</div>
+          <div class="wr-card-name">SmarterContact SMS Outreach</div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">What it does</span>
+            <span class="wr-card-val">Sends the approved scripts via SMS to each lead through your existing SmarterContact account and campaign — keeping your number reputation intact.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">How</span>
+            <span class="wr-card-val">Calls SmarterContact API with lead phone + personalized message + your campaign ID. Responses land in your SmarterContact inbox as normal.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">Outcome</span>
+            <span class="wr-card-val wr-outcome">Every approved lead gets the first touch that same morning. No leads fall through because the day got busy.</span>
+          </div>
+        </div>
+
+        <div class="wr-card">
+          <div class="wr-card-icon">📊</div>
+          <div class="wr-card-name">Attribution &amp; Payment Tracking</div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">What it does</span>
+            <span class="wr-card-val">Tracks each lead from first touch to closed deal. When a Dominion lead closes, the $500 fee is flagged automatically — no manual reconciliation.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">How</span>
+            <span class="wr-card-val">Every lead gets a unique Dominion ID at ingestion. Closing events update the lead record. Dashboard shows pipeline value, conversion rate, and fees owed.</span>
+          </div>
+          <div class="wr-card-row">
+            <span class="wr-card-label">Outcome</span>
+            <span class="wr-card-val wr-outcome">Clean books. Every dollar that flows from Dominion leads is accounted for without spreadsheets.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- ── COMPLETED ──────────────────────────────────────────── -->
     <div class="section" id="done">
       <div class="section-head"><h2>Completed</h2><span class="count-badge ok" id="badge-done">2 of 2</span></div>
@@ -706,7 +848,7 @@ function updateProgress() {
 
 // Scroll spy
 function initScrollSpy() {
-  const sections = ['built','graphics','posting','dominion','setup','done'];
+  const sections = ['built','graphics','posting','dominion','setup','warroom','done'];
   const links = document.querySelectorAll('.sb-link');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
