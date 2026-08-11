@@ -150,6 +150,17 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 .setup-note{font-size:12px;color:var(--muted);line-height:1.6;padding:10px 0}
 .setup-note strong{color:var(--text)}
 
+/* ── SIDEBAR SUB (war room detail panel) ────────────────────── */
+.sb-sub{padding:0 10px 6px 34px}
+.sb-sub-toggle{font-size:10px;color:var(--muted);cursor:pointer;list-style:none;
+  display:flex;align-items:center;gap:5px;padding:3px 0;opacity:.7;user-select:none}
+.sb-sub-toggle::-webkit-details-marker{display:none}
+.sb-sub-toggle::before{content:'▸';font-size:9px;color:var(--accent);transition:transform .12s}
+details[open] > .sb-sub-toggle::before{content:'▾'}
+.sb-sub-list{list-style:none;margin-top:4px;display:flex;flex-direction:column;gap:4px;padding-bottom:4px}
+.sb-sub-list li{font-size:10px;color:var(--muted);padding-left:10px;position:relative;line-height:1.4}
+.sb-sub-list li::before{content:'·';position:absolute;left:1px;color:var(--accent);opacity:.5}
+
 /* ── MOBILE ──────────────────────────────────────────────────── */
 @media(max-width:640px){
   #sidebar{position:fixed;top:0;left:0;width:100%;height:auto;border-right:none;
@@ -206,6 +217,24 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
       <li><a class="sb-link" href="#dominion">Dominion Pipeline <span class="sb-badge" id="sb-b-dominion">4</span></a></li>
       <div class="sb-section-label">Setup</div>
       <li><a class="sb-link" href="#setup">Mac Mini Setup</a></li>
+      <div class="sb-section-label">Live Tools</div>
+      <li>
+        <a class="sb-link" href="https://dominion-warroom-demo-production.up.railway.app" target="_blank" rel="noopener">
+          War Room ↗ <span class="sb-badge ok">Live</span>
+        </a>
+        <details class="sb-sub">
+          <summary class="sb-sub-toggle">What's built</summary>
+          <ul class="sb-sub-list">
+            <li>Pulls expired &amp; FSBO listings from Paragon daily at 6 AM</li>
+            <li>Tracerfy skip trace — phone + email per lead</li>
+            <li>HOT / WARM / COOL routing by seller signal</li>
+            <li>Pitch script sequences auto-queued per lead type</li>
+            <li>Morning digest text: approve before sends go out</li>
+            <li>SmarterContact SMS outreach cadence</li>
+            <li>Attribution + per-lead payment tracking</li>
+          </ul>
+        </details>
+      </li>
       <div class="sb-section-label">History</div>
       <li><a class="sb-link" href="#done">Completed <span class="sb-badge ok" id="sb-b-done">2</span></a></li>
     </ul>
@@ -683,10 +712,7 @@ function initScrollSpy() {
     entries.forEach(e => {
       if (e.isIntersecting) {
         links.forEach(l => l.classList.remove('active'));
-        const match = [...links].find(l => {
-          const fn = l.getAttribute('onclick') || '';
-          return fn.includes("'" + e.target.id + "'");
-        });
+        const match = [...links].find(l => l.getAttribute('href') === '#' + e.target.id);
         if (match) match.classList.add('active');
       }
     });
