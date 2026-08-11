@@ -199,15 +199,15 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 
     <div class="sb-section-label">Delivered</div>
     <ul class="sb-nav" id="sb-nav">
-      <li><a class="sb-link" onclick="scrollTo('built')">Built &amp; Ready <span class="sb-badge ok">5 graphics</span></a></li>
+      <li><a class="sb-link" onclick="navTo('built')">Built &amp; Ready <span class="sb-badge ok">5 graphics</span></a></li>
       <div class="sb-section-label">Action Items</div>
-      <li><a class="sb-link" onclick="scrollTo('graphics')">Graphics &amp; Photos <span class="sb-badge" id="sb-b-graphics">4</span></a></li>
-      <li><a class="sb-link" onclick="scrollTo('posting')">Posting &amp; Accounts <span class="sb-badge" id="sb-b-posting">3</span></a></li>
-      <li><a class="sb-link" onclick="scrollTo('dominion')">Dominion Pipeline <span class="sb-badge" id="sb-b-dominion">4</span></a></li>
+      <li><a class="sb-link" onclick="navTo('graphics')">Graphics &amp; Photos <span class="sb-badge" id="sb-b-graphics">4</span></a></li>
+      <li><a class="sb-link" onclick="navTo('posting')">Posting &amp; Accounts <span class="sb-badge" id="sb-b-posting">3</span></a></li>
+      <li><a class="sb-link" onclick="navTo('dominion')">Dominion Pipeline <span class="sb-badge" id="sb-b-dominion">4</span></a></li>
       <div class="sb-section-label">Setup</div>
-      <li><a class="sb-link" onclick="scrollTo('setup')">Mac Mini Setup</a></li>
+      <li><a class="sb-link" onclick="navTo('setup')">Mac Mini Setup</a></li>
       <div class="sb-section-label">History</div>
-      <li><a class="sb-link" onclick="scrollTo('done')">Completed <span class="sb-badge ok" id="sb-b-done">2</span></a></li>
+      <li><a class="sb-link" onclick="navTo('done')">Completed <span class="sb-badge ok" id="sb-b-done">2</span></a></li>
     </ul>
 
     <div class="sb-footer">
@@ -623,7 +623,7 @@ document.getElementById('pin').addEventListener('keydown', e => {
   if (e.key === 'Enter') tryLogin();
 });
 
-function scrollTo(id) {
+function navTo(id) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
