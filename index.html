@@ -77,9 +77,30 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
   padding:14px 16px;font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:20px}
 .note-box strong{color:var(--text)}
 
+/* BUILT & READY */
+.built-caps{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.built-cap{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:13px 14px}
+.built-cap-icon{font-size:18px;margin-bottom:5px}
+.built-cap-label{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.built-cap-sub{font-size:11px;color:var(--muted);line-height:1.45}
+.prop-cards{display:flex;flex-direction:column;gap:10px}
+.prop-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.prop-card-head{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.prop-card-thumb{width:72px;height:72px;object-fit:cover;border-radius:7px;flex-shrink:0;background:var(--panel2)}
+.prop-card-info{flex:1;min-width:0}
+.prop-card-addr{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px}
+.prop-card-status{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green);background:#1a2e1a;border-radius:5px;padding:2px 7px;display:inline-block}
+.prop-card-files{display:flex;gap:8px;padding:0 14px 12px;flex-wrap:wrap}
+.dl-btn{font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--accent);
+  background:var(--accent-soft);border-radius:6px;padding:5px 10px;text-decoration:none;
+  border:1px solid transparent;transition:border-color .15s}
+.dl-btn:hover{border-color:var(--accent)}
+
 @media(max-width:480px){
   #app{padding:16px 12px 50px}
   .item{padding:12px 13px;gap:11px}
+  .built-caps{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -102,14 +123,125 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
   <div class="top-bar">
     <div>
       <div class="top-brand">THE <span>BLK</span> GROUP</div>
-      <div class="top-meta">Updated Aug 10, 2026</div>
+      <div class="top-meta">Updated Aug 11, 2026</div>
     </div>
     <button class="logout-btn" onclick="logout()">Sign out</button>
   </div>
 
   <div class="note-box">
-    <strong>Hey Brandon</strong> — this tracks what's needed to keep the machine running.
-    Check items off as you send them over. Damon sees this live.
+    <strong>Hey Brandon</strong> — graphics are building. Below is what's ready to post, plus what's still needed to activate the full pipeline. Check items off as you send them over.
+  </div>
+
+  <!-- BUILT & READY -->
+  <div class="section">
+    <div class="section-head"><h2>Built &amp; Ready</h2><span class="count-badge" style="background:#1a2e1a;color:var(--green)">delivered</span></div>
+
+    <div class="built-caps">
+      <div class="built-cap">
+        <div class="built-cap-icon">⚡</div>
+        <div class="built-cap-label">30-sec graphic generation</div>
+        <div class="built-cap-sub">Automated pipeline. Address in, cover + 3 slides out. Runs on any listing.</div>
+      </div>
+      <div class="built-cap">
+        <div class="built-cap-icon">📸</div>
+        <div class="built-cap-label">AI photo selection</div>
+        <div class="built-cap-sub">Money shots first — water, outdoor living, views. Closets and pantries never make the cut.</div>
+      </div>
+      <div class="built-cap">
+        <div class="built-cap-icon">🔗</div>
+        <div class="built-cap-label">Zillow auto-pull</div>
+        <div class="built-cap-sub">Full photo stack sourced direct from Zillow at max resolution. No manual download needed.</div>
+      </div>
+      <div class="built-cap">
+        <div class="built-cap-icon">🤖</div>
+        <div class="built-cap-label">Dominion lead engine</div>
+        <div class="built-cap-sub">Expired + FSBO ingestion, skip trace, pitch scripts, HOT/WARM/COOL routing — fully built. Waiting on Paragon creds to activate.</div>
+      </div>
+    </div>
+
+    <div class="prop-cards">
+
+      <div class="prop-card">
+        <div class="prop-card-head">
+          <img class="prop-card-thumb" src="deliverables/34-stonegate-shores/cover.png" alt="34 Stonegate Shores">
+          <div class="prop-card-info">
+            <div class="prop-card-addr">34 Stonegate Shores, Hot Springs</div>
+            <span class="prop-card-status">Just Sold</span>
+          </div>
+        </div>
+        <div class="prop-card-files">
+          <a class="dl-btn" href="deliverables/34-stonegate-shores/cover.png" download>Cover</a>
+          <a class="dl-btn" href="deliverables/34-stonegate-shores/slide-1.png" download>Slide 1</a>
+          <a class="dl-btn" href="deliverables/34-stonegate-shores/slide-2.png" download>Slide 2</a>
+          <a class="dl-btn" href="deliverables/34-stonegate-shores/slide-3.png" download>Slide 3</a>
+        </div>
+      </div>
+
+      <div class="prop-card">
+        <div class="prop-card-head">
+          <img class="prop-card-thumb" src="deliverables/3458-garden-club/cover.png" alt="3458 Garden Club">
+          <div class="prop-card-info">
+            <div class="prop-card-addr">3458 Garden Club, Bryant</div>
+            <span class="prop-card-status">Just Sold</span>
+          </div>
+        </div>
+        <div class="prop-card-files">
+          <a class="dl-btn" href="deliverables/3458-garden-club/cover.png" download>Cover</a>
+          <a class="dl-btn" href="deliverables/3458-garden-club/slide-1.png" download>Slide 1</a>
+          <a class="dl-btn" href="deliverables/3458-garden-club/slide-2.png" download>Slide 2</a>
+          <a class="dl-btn" href="deliverables/3458-garden-club/slide-3.png" download>Slide 3</a>
+        </div>
+      </div>
+
+      <div class="prop-card">
+        <div class="prop-card-head">
+          <img class="prop-card-thumb" src="deliverables/4-almenara-lane/cover.png" alt="4 Almenara Lane">
+          <div class="prop-card-info">
+            <div class="prop-card-addr">4 Almenara Lane, Hot Springs Village</div>
+            <span class="prop-card-status">Just Sold</span>
+          </div>
+        </div>
+        <div class="prop-card-files">
+          <a class="dl-btn" href="deliverables/4-almenara-lane/cover.png" download>Cover</a>
+          <a class="dl-btn" href="deliverables/4-almenara-lane/slide-1.png" download>Slide 1</a>
+          <a class="dl-btn" href="deliverables/4-almenara-lane/slide-2.png" download>Slide 2</a>
+          <a class="dl-btn" href="deliverables/4-almenara-lane/slide-3.png" download>Slide 3</a>
+        </div>
+      </div>
+
+      <div class="prop-card">
+        <div class="prop-card-head">
+          <img class="prop-card-thumb" src="deliverables/12514-colleen-drive/cover.png" alt="12514 Colleen Drive">
+          <div class="prop-card-info">
+            <div class="prop-card-addr">12514 Colleen Drive, Little Rock</div>
+            <span class="prop-card-status">Just Sold</span>
+          </div>
+        </div>
+        <div class="prop-card-files">
+          <a class="dl-btn" href="deliverables/12514-colleen-drive/cover.png" download>Cover</a>
+          <a class="dl-btn" href="deliverables/12514-colleen-drive/slide-1.png" download>Slide 1</a>
+          <a class="dl-btn" href="deliverables/12514-colleen-drive/slide-2.png" download>Slide 2</a>
+          <a class="dl-btn" href="deliverables/12514-colleen-drive/slide-3.png" download>Slide 3</a>
+        </div>
+      </div>
+
+      <div class="prop-card">
+        <div class="prop-card-head">
+          <img class="prop-card-thumb" src="deliverables/121-lily-drive/cover.png" alt="121 Lily Drive">
+          <div class="prop-card-info">
+            <div class="prop-card-addr">121 Lily Drive, Maumelle</div>
+            <span class="prop-card-status">Just Sold</span>
+          </div>
+        </div>
+        <div class="prop-card-files">
+          <a class="dl-btn" href="deliverables/121-lily-drive/cover.png" download>Cover</a>
+          <a class="dl-btn" href="deliverables/121-lily-drive/slide-1.png" download>Slide 1</a>
+          <a class="dl-btn" href="deliverables/121-lily-drive/slide-2.png" download>Slide 2</a>
+          <a class="dl-btn" href="deliverables/121-lily-drive/slide-3.png" download>Slide 3</a>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <div class="progress-label">
