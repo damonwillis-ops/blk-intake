@@ -10,11 +10,10 @@
   --text:#eef0f3;--accent:#c19a5b;--accent-soft:#3a3326;--radius:12px;
   --red:#e74c3c;--green:#27ae60;--orange:#f39c12;--sb:220px}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden}
-body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(--bg)}
+body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100vh}
 
 /* ── LOGIN ───────────────────────────────────────────────────── */
-#login{display:flex;align-items:center;justify-content:center;height:100vh;padding:20px}
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
 .login-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
   padding:40px 32px;max-width:340px;width:100%;text-align:center}
 .brand{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
@@ -30,12 +29,11 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 .err{color:var(--red);font-size:12px;margin-top:8px;min-height:18px}
 
 /* ── APP SHELL ───────────────────────────────────────────────── */
-#app{display:none;height:100vh;flex-direction:row}
+#app{display:none}
 
 /* ── SIDEBAR ─────────────────────────────────────────────────── */
-#sidebar{width:var(--sb);min-width:var(--sb);background:var(--panel);
-  border-right:1px solid var(--line);height:100vh;display:flex;flex-direction:column;
-  overflow-y:auto;flex-shrink:0}
+#sidebar{position:fixed;top:0;left:0;width:var(--sb);height:100vh;background:var(--panel);
+  border-right:1px solid var(--line);display:flex;flex-direction:column;overflow-y:auto;z-index:100}
 .sb-top{padding:20px 18px 16px;border-bottom:1px solid var(--line)}
 .sb-brand{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
 .sb-brand span{color:var(--accent)}
@@ -63,7 +61,7 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 .sb-prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),#e8b96a);border-radius:999px;transition:width .4s}
 
 /* ── MAIN ────────────────────────────────────────────────────── */
-#main{flex:1;height:100vh;overflow-y:auto;padding:28px 28px 80px;max-width:760px}
+#main{margin-left:var(--sb);min-height:100vh;padding:28px 32px 80px;max-width:calc(760px + var(--sb));}
 .top-bar{display:flex;align-items:center;justify-content:space-between;
   border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px}
 .top-brand{font-size:11px;letter-spacing:.24em;text-transform:uppercase}
@@ -154,17 +152,16 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 
 /* ── MOBILE ──────────────────────────────────────────────────── */
 @media(max-width:640px){
-  html,body{overflow:auto}
-  #app{flex-direction:column;height:auto}
-  #sidebar{width:100%;min-width:0;height:auto;border-right:none;border-bottom:1px solid var(--line);
-    flex-direction:row;align-items:center;padding:0;overflow-x:auto;overflow-y:hidden}
+  #sidebar{position:fixed;top:0;left:0;width:100%;height:auto;border-right:none;
+    border-bottom:1px solid var(--line);flex-direction:row;align-items:center;
+    overflow-x:auto;overflow-y:hidden;padding:0}
   .sb-top{display:none}
-  .sb-nav{display:flex;flex-direction:row;padding:0;white-space:nowrap}
+  .sb-nav{display:flex;flex-direction:row;padding:0;white-space:nowrap;flex:1}
   .sb-nav li{margin:0}
-  .sb-link{padding:12px 14px;border-left:none;border-bottom:2px solid transparent}
+  .sb-link{padding:10px 14px;border-left:none;border-bottom:2px solid transparent;font-size:11px}
   .sb-link.active{border-bottom-color:var(--accent);border-left-color:transparent;background:none}
   .sb-section-label,.sb-footer,.sb-progress{display:none}
-  #main{height:auto;padding:16px 14px 60px;max-width:100%}
+  #main{margin-left:0;margin-top:44px;padding:16px 14px 60px}
   .built-caps{grid-template-columns:1fr}
 }
 </style>
@@ -605,7 +602,7 @@ function tryLogin() {
   const val = document.getElementById('pin').value.trim();
   if (val === PIN) {
     document.getElementById('login').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
+    document.getElementById('app').style.display = 'block';
     loadState();
     updateProgress();
     initScrollSpy();
