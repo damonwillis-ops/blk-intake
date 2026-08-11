@@ -10,7 +10,7 @@
   --text:#eef0f3;--accent:#c19a5b;--accent-soft:#3a3326;--radius:12px;
   --red:#e74c3c;--green:#27ae60;--orange:#f39c12;--sb:220px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100vh}
+body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100vh;scroll-behavior:smooth}
 
 /* ── LOGIN ───────────────────────────────────────────────────── */
 #login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
@@ -199,15 +199,15 @@ body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(
 
     <div class="sb-section-label">Delivered</div>
     <ul class="sb-nav" id="sb-nav">
-      <li><a class="sb-link" onclick="navTo('built')">Built &amp; Ready <span class="sb-badge ok">5 graphics</span></a></li>
+      <li><a class="sb-link" href="#built">Built &amp; Ready <span class="sb-badge ok">5 graphics</span></a></li>
       <div class="sb-section-label">Action Items</div>
-      <li><a class="sb-link" onclick="navTo('graphics')">Graphics &amp; Photos <span class="sb-badge" id="sb-b-graphics">4</span></a></li>
-      <li><a class="sb-link" onclick="navTo('posting')">Posting &amp; Accounts <span class="sb-badge" id="sb-b-posting">3</span></a></li>
-      <li><a class="sb-link" onclick="navTo('dominion')">Dominion Pipeline <span class="sb-badge" id="sb-b-dominion">4</span></a></li>
+      <li><a class="sb-link" href="#graphics">Graphics &amp; Photos <span class="sb-badge" id="sb-b-graphics">4</span></a></li>
+      <li><a class="sb-link" href="#posting">Posting &amp; Accounts <span class="sb-badge" id="sb-b-posting">3</span></a></li>
+      <li><a class="sb-link" href="#dominion">Dominion Pipeline <span class="sb-badge" id="sb-b-dominion">4</span></a></li>
       <div class="sb-section-label">Setup</div>
-      <li><a class="sb-link" onclick="navTo('setup')">Mac Mini Setup</a></li>
+      <li><a class="sb-link" href="#setup">Mac Mini Setup</a></li>
       <div class="sb-section-label">History</div>
-      <li><a class="sb-link" onclick="navTo('done')">Completed <span class="sb-badge ok" id="sb-b-done">2</span></a></li>
+      <li><a class="sb-link" href="#done">Completed <span class="sb-badge ok" id="sb-b-done">2</span></a></li>
     </ul>
 
     <div class="sb-footer">
@@ -623,10 +623,6 @@ document.getElementById('pin').addEventListener('keydown', e => {
   if (e.key === 'Enter') tryLogin();
 });
 
-function navTo(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 
 function toggle(checkEl) {
   const item = checkEl.closest('.item');
